@@ -1,39 +1,38 @@
 import {
-    Wave
-} from './wave.js';
+  WaveGroup
+} from './waveGroup.js';
 
 class App {
-    constructor() {
-        this.canvas = document.createElement('canvas');
-        this.ctx = this.canvas.getContext('2d');
-        document.body.appendChild(this.canvas);
+  constructor() {
+    this.canvas = document.createElement('canvas');
+    this.ctx = this.canvas.getContext('2d');
+    document.body.appendChild(this.canvas);
 
-        this.wave = new Wave();
+    this.waveGroup = new WaveGroup();
 
-        window.addEventListener('resize', this.resize.bind(this), false);
-        this.resize();
+    window.addEventListener('resize', this.resize.bind(this), false);
+    this.resize();
+    requestAnimationFrame(this.animate.bind(this));
+  }
 
-        requestAnimationFrame(this.animate.bind(this));
-    }
+  resize() {
+    this.stageWidth = document.body.clientWidth;
+    this.stageHeight = document.body.clientHeight;
+    this.canvas.width = this.stageWidth * 2;
+    this.canvas.height = this.stageHeight * 2;
+    this.ctx.scale(2, 2);
 
-    resize() {
-        this.stageWidth = document.body.clientWidth;
-        this.stageHeight = document.body.clientHeight;
+    this.waveGroup.resize(this.stageWidth, this.stageHeight);
+  }
 
-        this.canvas.width = this.stageWidth * 2;
-        this.canvas.height = this.stageHeight * 2;
-        this.ctx.scale(2, 2);
+  animate(t) {
+    this.ctx.clearRect(0, 0, this.stageWidth, this.stageHeight);
 
-        this.wave.resize(this.stageWidth, this.stageHeight);
-    }
-
-    animate(t) {
-        this.ctx.clearRect(0, 0, this.stageWidth, this.stageHeight);
-        this.wave.draw(this.ctx);
-        requestAnimationFrame(this.animate.bind(this));
-    }
+    this.waveGroup.draw(this.ctx);
+    requestAnimationFrame(this.animate.bind(this));
+  }
 }
 
 window.onload = () => {
-    new App();
-}
+  new App();
+};

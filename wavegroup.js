@@ -4,7 +4,7 @@ import {
 
 export class WaveGroup {
     constructor() {
-        this.totalWaves = 1;
+        this.totalWaves = 3;
         this.totalPoints = 6;
 
         this.color = ['rgba(0, 199, 255, 0.4', 'rgba(0, 146, 199, 0,4', 'rgba(0, 87, 158, 0.4'];
@@ -17,6 +17,7 @@ export class WaveGroup {
                 this.totalPoints,
                 this.color[i],
             );
+            this.waves[i] = wave;
         }
     }
 
